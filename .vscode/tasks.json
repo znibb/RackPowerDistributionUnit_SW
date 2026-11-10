@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Configure (Debug)",
+      "type": "shell",
+      "command": "cmake --preset Debug",
+      "options": { "cwd": "${workspaceFolder}/stm32cubemx" }
+    },
+    {
+      "label": "Build (Debug)",
+      "type": "shell",
+      "command": "cmake --preset Debug && cmake --build --preset Debug",
+      "options": { "cwd": "${workspaceFolder}/stm32cubemx" },
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "Flash (OpenOCD)",
+      "type": "shell",
+      "dependsOn": "Build (Debug)",
+      "command": "openocd -f openocd.cfg -c \"program stm32cubemx/build/Debug/RackPowerDistributionUnit.elf verify reset exit\""
+    }
+  ]
+}
